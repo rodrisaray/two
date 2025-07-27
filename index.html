@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grow Through Simplicity</title>
+  <meta name="description" content="Digital marketing layout integrating Blogger, WordPress, and social platforms to help youth learn and grow with simple, powerful content." />
+  <link rel="icon" href="assets/favicon.png" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white text-gray-900">
+
+  <!-- Header -->
+  <header class="bg-blue-700 text-white py-4 shadow">
+    <div class="max-w-7xl mx-auto px-4 flex justify-between items-center">
+      <h1 class="text-2xl font-bold">Simple Digital Path</h1>
+      <nav class="space-x-4 text-sm">
+        <a href="#hero" class="hover:underline">Home</a>
+        <a href="#blog" class="hover:underline">Blogger</a>
+        <a href="#wp" class="hover:underline">WordPress</a>
+        <a href="#social" class="hover:underline">Social</a>
+        <a href="#gmb" class="hover:underline">Business</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero / CTA -->
+  <section id="hero" class="text-center py-20 bg-blue-50 px-4">
+    <div class="max-w-2xl mx-auto">
+      <h2 class="text-4xl font-extrabold mb-4">Simple Content. Real Skills.</h2>
+      <p class="text-lg text-gray-700 mb-6">We help youth grow by sharing easy-to-understand content through trusted digital platforms.</p>
+      <a href="#blog" class="bg-blue-700 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-800 transition">Explore Now</a>
+    </div>
+  </section>
+
+  <!-- Blogger Blog Section -->
+  <section id="blog" class="py-16 bg-white px-4">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl font-bold text-center mb-10">Latest from Blogger</h2>
+      <div id="blogFeed" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <!-- Blogger posts will be loaded here -->
+      </div>
+    </div>
+  </section>
+
+  <!-- WordPress Link Section -->
+  <section id="wp" class="py-16 bg-gray-50 px-4">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-2xl font-bold mb-4">Read Our WordPress Blog</h2>
+      <p class="text-gray-600 mb-4">More tutorials and guides to help you grow.</p>
+      <a href="https://yourwordpresssite.wordpress.com" target="_blank" class="text-blue-700 underline font-semibold">Visit WordPress Site →</a>
+    </div>
+  </section>
+
+  <!-- Social Media Section -->
+  <section id="social" class="py-16 bg-white px-4">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-2xl font-semibold mb-4">Connect on Social Media</h2>
+      <p class="text-gray-600 mb-6">Get updates, tips, and digital skills made simple.</p>
+      <div class="flex justify-center space-x-6 text-blue-700 text-2xl">
+        <a href="https://facebook.com/yourpage" aria-label="Facebook">📘</a>
+        <a href="https://twitter.com/yourhandle" aria-label="Twitter">🐦</a>
+        <a href="https://instagram.com/yourprofile" aria-label="Instagram">📸</a>
+        <a href="https://linkedin.com/in/yourprofile" aria-label="LinkedIn">💼</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Google My Business Section -->
+  <section id="gmb" class="py-16 bg-gray-100 px-4">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-2xl font-semibold mb-4">Find Us on Google</h2>
+      <p class="text-gray-600 mb-6">See reviews, location, and business details.</p>
+      <a href="https://www.google.com/search?q=your+business+name" target="_blank" class="text-blue-700 underline font-semibold">Google My Business →</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-blue-700 text-white text-center py-6">
+    <p class="text-sm">© 2025 Simple Digital. Easy content powered by Blogger, WordPress, and social platforms. No sign-in needed.</p>
+  </footer>
+
+  <!-- Blogger Feed Script -->
+  <script>
+    const blogFeed = document.getElementById("blogFeed");
+    const bloggerFeedUrl = "https://yourblogname.blogspot.com/feeds/posts/default?alt=json&max-results=3";
+
+    fetch(bloggerFeedUrl)
+      .then(res => res.json())
+      .then(data => {
+        const entries = data.feed.entry || [];
+        entries.forEach(entry => {
+          const title = entry.title.$t;
+          const link = entry.link.find(l => l.rel === 'alternate').href;
+          const published = new Date(entry.published.$t).toLocaleDateString();
+
+          const postHTML = `
+            <a href="${link}" target="_blank" rel="noopener noreferrer"
+              class="block bg-gray-100 p-6 rounded-lg shadow hover:shadow-lg transition">
+              <h3 class="text-xl font-semibold text-gray-800 mb-2">${title}</h3>
+              <p class="text-sm text-gray-500">${published}</p>
+            </a>
+          `;
+          blogFeed.innerHTML += postHTML;
+        });
+      })
+      .catch(err => {
+        blogFeed.innerHTML = "<p class='text-red-500'>Unable to load blog posts.</p>";
+        console.error("Blogger feed error:", err);
+      });
+  </script>
+
+</body>
+</html>
